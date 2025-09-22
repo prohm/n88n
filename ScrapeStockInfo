@@ -26,3 +26,50 @@ console.log(`Scrape SKU: ${productInfo.sku}`);
 
 let retryCount = 0;
 const maxRetries = 3;
+
+while (retryCount < maxRetries) {
+  try {
+    const response = await axios.get(productUrl, {
+      httpsAgent: proxyAgent,
+      httpAgent: proxyAgent,
+      headers: {
+        'User-Agent': randomUA,
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+        'Accept-Language': 'EN-US,en;q=0.9,en;q=0.8',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'DNT': '1',
+        'Connection': 'keep-alive',
+        'Upgrade-Insecure-Requests': '1',
+        'Cache-Control': 'no-cache',
+        'Sec-Fetch-Dest': 'document',
+        'Sec-Fetch-Mode': 'navigate',
+        'Sec-Fetch-Site': 'none'
+      },
+      timeout: 15000, 
+      responseTimeout: 10000, 
+      connectionTimeout: 5000
+    });
+    
+    return {
+      json: {
+        ...productInfo,
+        scrapedData: response.data
+      }
+    };
+    
+  } catch (error) {
+    retryCount++;
+    console.error(`SKU ${productInfo.sku} failed (Retry ${retryCount}/${maxRetries}):`, error.toString());
+    if (retryCount >= maxRetries) {
+      return {
+        json: {
+          ...productInfo,
+          error: error.toString()
+        }
+      };
+    }
+    //await new Promise(resolve => setTimeout(resolve, 5000));
+    const retryDelays = [5000, 15000, 45000]; 
+    await new Promise(resolve => setTimeout(resolve, retryDelays[retryCount - 1] || 60000));
+  }
+}
