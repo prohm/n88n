@@ -15,6 +15,8 @@ const { SocksProxyAgent } = require('socks-proxy-agent');
 const proxyUrl = `socks5://${inputData.proxyUsername}:${inputData.proxyPassword}@${inputData.proxyHost}:${inputData.proxyPort}`;
 const proxyAgent = new SocksProxyAgent(proxyUrl);
 
+delete require.cache[require.resolve('axios')];
+
 
 const userAgents = [
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
