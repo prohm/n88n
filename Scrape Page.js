@@ -30,6 +30,9 @@ const randomUA = userAgents[Math.floor(Math.random() * userAgents.length)];
 
 
 const pageUrl = currentPage === 1 ? inputData.baseUrl : `${inputData.baseUrl}/${currentPage}/`; 
+const timestamp = Date.now();
+const random = Math.random().toString(36).substring(7);
+const pageUrl = `${inputData.baseUrl}${inputData.baseUrl.includes('?') ? '&' : '?'}_t=${timestamp}&_r=${random}`;
 
 console.log(`Page: ${currentPage},Delay: ${currentPage > 1 ? randomDelay : 0} `);
 console.log(`Proxy: ${inputData.proxyHost}:${inputData.proxyPort}`);
