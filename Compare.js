@@ -1,7 +1,6 @@
 const currentProducts = $('Product Info').all(); 
 const existingData = $('Get All Rows from Sheet').all(); 
 
-
 const existingSKUMap = {};
 existingData.forEach(item => {
   const sku = item.json.sku;
@@ -11,18 +10,15 @@ existingData.forEach(item => {
   existingSKUMap[sku].push(item.json);
 });
 
-
 Object.keys(existingSKUMap).forEach(sku => {
   existingSKUMap[sku].sort((a, b) => new Date(b.time) - new Date(a.time));
 });
-
 
 const dataToAdd = [];
 
 currentProducts.forEach(currentItem => {
   const currentProduct = currentItem.json;
-  const sku = currentProduct.sku;
-  
+  const sku = currentProduct.sku;  
 
   if (!existingSKUMap[sku]) {
     dataToAdd.push({
