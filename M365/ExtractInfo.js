@@ -46,6 +46,18 @@ contentSelectors.forEach(selector => {
   }
 });
 
+  let incidentLink = null;
+try {
+  const incidentAnchor = $('a[href*="servicehealth?message="]').first();
+  const href = incidentAnchor.attr('href');
+  
+  if (href) {
+    incidentLink = href.startsWith('http') ? href : `https://admin.microsoft.com${href}`;
+  }
+} catch (linkError) {
+  console.warn('Failed to extract incident link:', linkError.message);
+}
+
 
 plainText = plainText.replace(/\s+\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
 
