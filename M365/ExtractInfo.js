@@ -58,6 +58,11 @@ try {
   console.warn('Failed to extract incident link:', linkError.message);
 }
 
+const CONFIG = {
+  REMOVE_ELEMENTS: 'script, style, head, nav, footer, iframe, img, noscript',
+  CONTENT_SELECTORS: 'body, main, div.main-content, article, section',
+  INCIDENT_LINK_SELECTOR: 'a[href*="servicehealth?message="]'
+};
 
 plainText = plainText.replace(/\s+\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
 
