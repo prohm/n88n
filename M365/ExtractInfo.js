@@ -65,11 +65,16 @@ const CONFIG = {
 };
 
 plainText = plainText.replace(/\s+\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
+try {
 
-
-return [{
-  json: {
-    extractedText: plainText,
-    incidentLink: incidentLink
-  }
-}];
+  return [{
+    json: {
+      extractedText: cleanedText,
+      incidentLink: incidentLink,
+      processedAt: new Date().toISOString()
+    }
+  }];
+} finally {
+ 
+  $ = null;
+}
