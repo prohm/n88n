@@ -26,8 +26,9 @@ let plainText = '';
 
 const mainContent = $('body') || $('main') || $('div.main-content');
 
-
-mainContent.find('h1, h2, h3, h4, h5, p, li, table, div').each((i, el) => {
+const contentSelectors = ['h1', 'h2', 'h3', 'h4', 'h5', 'p', 'li'];
+contentSelectors.forEach(selector => {
+  mainContent.find(selector).each((i, el) => {
   const tag = $(el).prop('tagName').toLowerCase();
   const text = $(el).text().trim();
   
