@@ -5,12 +5,13 @@ const cheerio = require("cheerio");
 
 const htmlContent = items[0].json.body.content;
 
+
 if (!htmlContent) {
   throw new Error("No HTML content found in the input");
 }
 
 
-const $ = cheerio.load(htmlContent);
+const $ = cheerio.load(htmlContent, { xmlMode: true });
 
 
 const incidentAnchor = $('a[href*="servicehealth?message="]').first();
