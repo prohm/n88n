@@ -1,13 +1,13 @@
-下面这段代码是什么用途：
-
 const cheerio = require("cheerio");
 
+if (!items || !items[0] || !items[0].json || !items[0].json.body) {
+  throw new Error("Invalid input structure: expected items[0].json.body");
+}
 
 const htmlContent = items[0].json.body.content;
 
-
-if (!htmlContent) {
-  throw new Error("No HTML content found in the input");
+if (!htmlContent || typeof htmlContent !== 'string') {
+  throw new Error("No valid HTML content found in the input");
 }
 
 
